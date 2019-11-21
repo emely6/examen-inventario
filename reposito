@@ -1,0 +1,141 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <stdio.h>
+
+using namespace std;
+
+void ingresed();
+void iteraciones();
+
+
+float h, n, k,cant,res;
+float cs[30], c[30];
+
+
+
+int main(){
+	int resp=0;
+
+	MENU:
+system("cls");
+
+	do{
+
+	cout << "\n\t---> MODELO DETERMINISTICO DE REVISION PERIODICA <---";
+
+	        ingresed();
+			iteraciones();
+
+
+			cout<<"DESEA OTRO CALCULO? (s[1]/n[2])";
+cin>>res;
+ if (res == 1)
+			goto MENU;
+		else
+			return 0;
+
+}while(resp!=1);
+
+
+
+
+	return 0;
+
+}
+
+void ingresed(){
+
+
+	for(int l=0;l<20;l++){
+		cs[l]=0;
+		c[l]=0;
+	}
+
+	int r=0, suma=0;
+	cout << "\n\ningrese preparacion(k): ";
+	cin >>k ;
+	cout << "\ningrese mantenimiento(h): ";
+	cin >> h;
+	cout << "\n cuantos periodos desea ingresar: ";
+	cin >> n;
+	cout<<endl;
+
+
+	system("cls");
+	do{
+		if(suma < n || suma > n  ){
+	     suma=0;
+    	for(int i=1; i<=n; i++){
+	    	cout << "\nPERIODO " << i << " : ";
+		    cin >> c[i];
+			suma+=c[i];
+		}
+
+	    }
+
+		if(suma==n || suma<n){
+		        cout << "\ncorrecto ";
+		        cout << "\nmostrar iteraciones[1]: ";
+		        cin >> r;
+	     }
+
+	     else {
+			cout << "\nincorrecto";
+			cout << "\ncorregir [0] o seguir [1]: ";
+			cin >> r;
+		    }
+    	}
+    while(r!=1);
+
+
+    for(int j=1; j<=n+1; j++)
+    	  cs[j]=0;
+
+
+	for(int i=1; i<=n; i++){
+
+
+
+		cout <<"\nproducto:" << i << " es: " << c[i] <<endl;
+
+	}
+
+		system("cls");
+}
+
+
+
+void iteraciones(){
+	int cont=0;
+	float aux;
+	float mi=0;
+	for(int x=n; x>=1; x--){
+		cout<<"       "<<endl;
+		cout << "\nITERACIONES PARA EL PERIODO: " << x ;
+    	cont=0;
+		for(int i=x; i<=n;i++ ){
+			aux=0;
+			for(int k=1;k<cont+1;k++){
+				aux+=k*c[x+k];
+
+			}
+			if(i==x){
+				cs[x]=cs[i+1]+k+(h*aux);
+				mi=cs[x];
+				cout <<"\nPeriodo " << x << " a " << i+1 <<" Iteracion= "<<cs[i+1]<<"+"<<k<<"="<<cs[x]<< endl;
+			}else{
+				cs[x]=cs[i+1]+k+(h*aux);
+					cout <<"\nPeriodo " << x << " a " << i+1 <<" Iteracion= "<<cs[i+1]<<"+"<<k<<"+("<<h<<"*"<<aux<<")"<<"="<<cs[x]<< endl;
+			}
+		  	if(mi<cs[x]){
+    			cs[x]=mi;
+			}else{
+				mi=cs[x];
+			}
+			cont++;
+		}
+		cout <<"\n\nEl costo minimo para  "<<"C"<<x<< " es: " << mi << endl<<endl;
+		mi=0;
+		cout<<"__________________________________________________________________"<<endl;
+	}}
